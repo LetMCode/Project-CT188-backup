@@ -1,6 +1,8 @@
 var shoesAPI = "http://localhost:3000/shoes";
 var cartUserAPI = "http://localhost:3000/cartUser"
 var list = document.querySelector(".list-item");
+var IconCart = document.querySelector('.icon-cart')
+var posIconCart = document.createElement('span')
 
 function getItem(data,callback){
     var options = {
@@ -33,8 +35,11 @@ function addItem(data,callback){
 }
 
 function handleOther (data){
-    addItem(data,app.renderIconQuantityCart)
+    addItem(data)
+    app.getCartAPI(app.renderIconQuantityCart)
 }
+
+
 const app = {
     getProductAPI: function (callback) {
         fetch(shoesAPI)
@@ -72,8 +77,6 @@ const app = {
         list.innerHTML = html.join("");
     },
     renderIconQuantityCart: function(data){
-        var IconCart = document.querySelector('.icon-cart')
-        var posIconCart = document.createElement('span')
         posIconCart.setAttribute('class','.item-page__action-icon')
         const htmls = `
             <span class="quantityIcon-header">${data.length}</span>
