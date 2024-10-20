@@ -26,6 +26,17 @@ function handleDeleteCart(data){
     DeleteCart(data,getCartAPI(renderCart))
 }
 
+function renderIconQuantityCart (data){
+    var IconCart = document.querySelector('.icon-cart')
+    var posIconCart = document.createElement('span')
+    posIconCart.setAttribute('class','.item-page__action-icon')
+    const htmls = `
+        <span class="quantityIcon-header">${data.length}</span>
+    `
+    posIconCart.innerHTML = htmls
+    IconCart.appendChild(posIconCart)
+}
+
 function renderCart(data){
     var listCart = document.querySelector('.list-item__cart')
     renderTotalPrice(data)
@@ -94,7 +105,7 @@ function renderTotalPrice(data){
 
 function start(){
     getCartAPI(renderCart)
-
+    getCartAPI(renderIconQuantityCart)
 }
 
 start()

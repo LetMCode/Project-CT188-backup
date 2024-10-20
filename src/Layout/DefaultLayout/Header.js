@@ -1,12 +1,5 @@
 const body = document.querySelector('body')
 const header = document.createElement('header')
-var cartUserAPI = "http://localhost:3000/cartUser"
-
-function getCartAPI(callback){
-    fetch(cartUserAPI)
-        .then(response => response.json())
-        .then(callback)
-}
 
 function Header (){
     const html = `
@@ -31,7 +24,9 @@ function Header (){
                 </ul>
                 <ul class="list-actions">
                     <li class="item-page__action item-page__action-icon">
-                      
+                    <a href="../Cart/index.html" class="item-label icon-cart">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
                     </li>
                     <li class="item-page__action">
                         <a href="../SignUp/index.html" class="item-label">Sign In</a>
@@ -47,20 +42,5 @@ function Header (){
     return body.appendChild(header) 
 }  
 
-function renderIconQuantityCart(data){
-    var posIconCart = document.querySelector('.item-page__action-icon')
-    const htmls = `
-        <a href="../Cart/index.html" class="item-label icon-cart">
-            <i class="fa-solid fa-cart-shopping"></i>
-        </a>
-        <span class="quantityIcon-header">${data.length}</span>
-    `
-    posIconCart.innerHTML = htmls
-}
 
-function start(){
-    Header()
-    getCartAPI(renderIconQuantityCart)
-}
-
-start()
+Header()

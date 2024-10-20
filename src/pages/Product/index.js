@@ -2,7 +2,7 @@ var shoesAPI = "http://localhost:3000/shoes";
 var cartUserAPI = "http://localhost:3000/cartUser"
 var list = document.querySelector(".list-item");
 
-function handleGetItem(data,callback){
+function getItem(data,callback){
     var options = {
         method: 'GET',
         headers: {
@@ -16,7 +16,7 @@ function handleGetItem(data,callback){
         .then(callback)
 }
 
-function addOtherItem(data,callback){
+function addItem(data,callback){
     var options = {
         method: 'POST',
         body: JSON.stringify(data),
@@ -32,12 +32,17 @@ function addOtherItem(data,callback){
         .then(callback)
 }
 
-function handleOther(data){
-    addOtherItem(data)
+function handleOther (data){
+    addItem(data,app.renderIconQuantityCart)
 }
 const app = {
     getProductAPI: function (callback) {
         fetch(shoesAPI)
+            .then((response) => response.json())
+            .then(callback);
+    },
+    getCartAPI: function (callback) {
+        fetch(cartUserAPI)
             .then((response) => response.json())
             .then(callback);
     },
@@ -55,10 +60,10 @@ const app = {
                     <p class="item-product__author">
                         Hãng: ${item.author}
                     </p>
-                    <p class="item-product__price">
+                    <p onclick="click(e)" class="item-product__price">
                         Price: ${item.price}
                     </p>
-                    <button onclick ="handleGetItem(${item.id},handleOther)" class="item-product__other-btn">
+                    <button onclick ="getItem(${item.id},handleOther)" class="item-product__other-btn">
                         Other
                     </button>
                 </div>
@@ -66,8 +71,19 @@ const app = {
         });
         list.innerHTML = html.join("");
     },
+    renderIconQuantityCart: function(data){
+        var IconCart = document.querySelector('.icon-cart')
+        var posIconCart = document.createElement('span')
+        posIconCart.setAttribute('class','.item-page__action-icon')
+        const htmls = `
+            <span class="quantityIcon-header">${data.length}</span>
+        `
+        posIconCart.innerHTML = htmls
+        IconCart.appendChild(posIconCart)
+    },
     
     start: function () {
+        this.getCartAPI(this.renderIconQuantityCart)
         this.getProductAPI(this.renderProductAPI);
     },
 };
