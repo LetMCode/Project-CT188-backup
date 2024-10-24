@@ -3,7 +3,7 @@ var cartUserAPI = "http://localhost:3000/cartUser"
 var list = document.querySelector(".list-item");
 var IconCart = document.querySelector('.icon-cart')
 var posIconCart = document.createElement('span')
-
+var toastMsg = document.querySelector('.toastMsg-wrap')
 function getItem(data,callback){
     var options = {
         method: 'GET',
@@ -35,8 +35,34 @@ function addItem(data,callback){
 }
 
 function handleOther (data){
-    addItem(data)
-    app.getCartAPI(app.renderIconQuantityCart)
+    if(addItem(data)){
+        app.getCartAPI(app.renderIconQuantityCart)
+        toastMessage()
+    }
+}
+
+function toastMessage(){
+    const htmls = `
+        <span class="toastMsg__icon-wrap"> <i class="fa-solid fa-circle-check toastMsg__icon"></i></span>
+        <h4 class="toastMsg__heading">
+            Đã thêm sản phẩm vào giỏ hàng
+        </h4>
+    `
+    contentToastMsg = document.createElement("div")
+    contentToastMsg.setAttribute('class','toastMsg')
+    contentToastMsg.innerHTML = htmls
+    var btnOther = document.querySelectorAll('.item-product__other-btn')
+    for (let btn of btnOther) {
+    btn.onclick =  (e)=> {
+        toastMsg.appendChild(contentToastMsg)
+        contentToastMsg.style.animation = `slideInLeft ease .3s, fadeOut linear 1s 2s forwards`
+        setTimeout(function () {
+            toastMsg.removeChild(contentToastMsg);
+        }, 3000)
+    }
+    }
+
+   
 }
 
 
