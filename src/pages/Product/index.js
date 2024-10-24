@@ -35,10 +35,10 @@ function addItem(data,callback){
 }
 
 function handleOther (data){
-    if(addItem(data)){
-        app.getCartAPI(app.renderIconQuantityCart)
-        toastMessage()
-    }
+    addItem(data)
+    app.getCartAPI(app.renderIconQuantityCart)
+    setTimeout(() =>  toastMessage(),3000)
+    
 }
 
 function toastMessage(){
