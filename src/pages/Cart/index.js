@@ -8,7 +8,7 @@ function getCartAPI(callback){
         .then(callback)
 }
 
-function DeleteCart(data,callback){
+function DeleteCart(data){
     var options = {
         method: 'DELETE',
         body: JSON.stringify(data),
@@ -21,12 +21,11 @@ function DeleteCart(data,callback){
         .then(function(response){
             return response.json()
         })
+        .then(() =>{
+            getCartAPI(renderCart)
+            getCartAPI(renderIconQuantityCart)
+        })
         .then(callback)
-}
-
-function handleDeleteCart(data){
-    DeleteCart(data,getCartAPI(renderCart))
-    getCartAPI(renderIconQuantityCart)
 }
 
 function renderIconQuantityCart (data){
@@ -50,7 +49,7 @@ function renderCart(data){
             <h5 class="item-cart__code">${item.code}</h5>
             <p class="item-cart__size">Size: ${item.size}</p>
             <p class="item-cart__price">${item.price}</p>
-            <button onclick="handleDeleteCart(${item.id})" class="btn-delete__cart" >&times Delete</button>
+            <button onclick="DeleteCart(${item.id})" class="btn-delete__cart" >&times Delete</button>
             </div>
             `
         })
