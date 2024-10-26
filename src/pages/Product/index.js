@@ -30,8 +30,10 @@ function addItem(data, callback) {
     
     fetch(cartUserAPI, options)
         .then(function (response) {
-            
             return response.json();
+        })
+        .then(() =>{
+            toastMessage()
         })
         .then(callback);
 }
