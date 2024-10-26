@@ -37,8 +37,8 @@ function addItem(data, callback) {
 }
 
 function handleOther(data) {
-    addItem(data).preventDefault()
-    app.getCartAPI(app.renderIconQuantityCart).preventDefault()
+    addItem(data)
+    app.getCartAPI(app.renderIconQuantityCart)
     
 }
 
