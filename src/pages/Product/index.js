@@ -27,20 +27,25 @@ function addItem(data, callback) {
             Accept: "application/json",
         },
     };
+    
     fetch(cartUserAPI, options)
         .then(function (response) {
+            
             return response.json();
         })
         .then(callback);
 }
 
 function handleOther(data) {
-    addItem(data);
-    app.getCartAPI(app.renderIconQuantityCart);
-    setTimeout(() => toastMessage(),500);
+    addItem(data).preventDefault()
+    app.getCartAPI(app.renderIconQuantityCart).preventDefault()
+    
 }
 
 function toastMessage() {
+    var btnOther = document.querySelectorAll(".item-product__other-btn");
+    const duration = 3000
+    const delay = (duration / 1000).toFixed(2);
     const htmls = `
         <span class="toastMsg__icon-wrap"> <i class="fa-solid fa-circle-check toastMsg__icon"></i></span>
         <h4 class="toastMsg__heading">
@@ -50,19 +55,18 @@ function toastMessage() {
     contentToastMsg = document.createElement("div");
     contentToastMsg.setAttribute("class", "toastMsg");
     contentToastMsg.innerHTML = htmls;
-    var btnOther = document.querySelectorAll(".item-product__other-btn");
     const autoRemoveId = setInterval(function () {
         toastMsg.removeChild(toast);
-    }, 1000);
-
+    }, duration + 1000);
+    
+    console.log(delay)
     for (let btn of btnOther) {
-        btn.onclick = (e) => {
+        btn.onclick = () => {
             toastMsg.appendChild(contentToastMsg);
-            contentToastMsg.style.animation = `slideInLeft ease .3s, fadeOut linear 1s 2s forwards`;
-            autoRemoveId
+            contentToastMsg.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
             clearTimeout(autoRemoveId);
         };
-    }
+    }   
 }
 
 const app = {
@@ -108,6 +112,7 @@ const app = {
         `;
         posIconCart.innerHTML = htmls;
         IconCart.appendChild(posIconCart);
+        toastMessage()
     },
 
     start: function () {
