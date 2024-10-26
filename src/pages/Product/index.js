@@ -13,11 +13,14 @@ function getItem(data, callback) {
     };
     fetch(shoesAPI + "/" + data, options)
         .then(function (response) {
+           
+            return response.json();
+        })
+        .then(()=>{
             var btnOther = document.querySelectorAll(
                 ".item-product__other-btn"
             );
             toastMessage(btnOther);
-            return response.json();
         })
         .then(callback);
 }
