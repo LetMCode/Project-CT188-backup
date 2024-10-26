@@ -39,7 +39,6 @@ function addItem(data, callback) {
 function handleOther(data) {
     addItem(data)
     app.getCartAPI(app.renderIconQuantityCart)
-    toastMessage()
 }
 
 function toastMessage() {
@@ -78,6 +77,7 @@ const app = {
     getCartAPI: function (callback) {
         fetch(cartUserAPI)
             .then((response) => response.json())
+            .then(toastMessage())
             .then(callback);
     },
     renderProductAPI: function (ListOfAPI) {
