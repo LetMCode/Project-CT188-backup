@@ -32,10 +32,10 @@ function addItem(data, callback) {
         .then(function (response) {
             return response.json();
         })
-        .then(() =>{
+        .then((callback) =>{
             toastMessage()
+            return callback
         })
-        .then(callback);
 }
 
 function handleOther(data) {
