@@ -77,7 +77,6 @@ const app = {
     getCartAPI: function (callback) {
         fetch(cartUserAPI)
             .then((response) => response.json())
-            .then(toastMessage())
             .then(callback);
     },
     renderProductAPI: function (ListOfAPI) {
