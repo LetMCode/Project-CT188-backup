@@ -16,13 +16,7 @@ function getItem(data, callback) {
            
             return response.json();
         })
-        .then((e)=>{
-            var btnOther = document.querySelectorAll(
-                ".item-product__other-btn"
-            );
-            toastMessage(btnOther);
-            return e
-        })
+        
         .then(callback);
 }
 
@@ -39,6 +33,13 @@ function addItem(data, callback) {
     fetch(cartUserAPI, options)
         .then(function (response) {
             return response.json();
+        })
+        .then((e)=>{
+            var btnOther = document.querySelectorAll(
+                ".item-product__other-btn"
+            );
+            toastMessage(btnOther);
+            return e
         })
         .then(callback);
 }
