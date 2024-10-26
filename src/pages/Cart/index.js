@@ -25,6 +25,7 @@ function DeleteCart(data){
             getCartAPI(renderCart)
             getCartAPI(renderIconQuantityCart)
         })
+        .then(callback)
 }
 
 function renderIconQuantityCart (data){

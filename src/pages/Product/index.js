@@ -16,11 +16,12 @@ function getItem(data, callback) {
            
             return response.json();
         })
-        .then(()=>{
+        .then((e)=>{
             var btnOther = document.querySelectorAll(
                 ".item-product__other-btn"
             );
             toastMessage(btnOther);
+            return e
         })
         .then(callback);
 }
