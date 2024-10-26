@@ -39,7 +39,7 @@ function addItem(data, callback) {
 function handleOther(data) {
     addItem(data)
     app.getCartAPI(app.renderIconQuantityCart)
-    
+    toastMessage()
 }
 
 function toastMessage() {
@@ -112,7 +112,7 @@ const app = {
         `;
         posIconCart.innerHTML = htmls;
         IconCart.appendChild(posIconCart);
-        toastMessage()
+        
     },
 
     start: function () {
