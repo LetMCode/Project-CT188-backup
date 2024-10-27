@@ -45,11 +45,11 @@ function handleOther(data) {
 
 function toastMessage() {
     var btnOther = document.querySelectorAll('.item-product__other-btn')
-    const duration = 3000;
-    const delay = (duration / 1000).toFixed(2);
+    const duration = 1000;
+    const delay = (duration / 5000).toFixed(2);
     const autoRemoveId = setTimeout(function () {
         toastMsg.classList.remove('active');
-    }, duration + 1000);
+    }, duration + 500);
     for (let btn of btnOther) {
         btn.addEventListener('click',() => {
             toastMsg.classList.add('active')

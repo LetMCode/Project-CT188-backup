@@ -8,7 +8,7 @@ function getCartAPI(callback){
         .then(callback)
 }
 
-function DeleteCart(data){
+function DeleteCart(data,callback){
     var options = {
         method: 'DELETE',
         body: JSON.stringify(data),
