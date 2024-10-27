@@ -45,15 +45,25 @@ function handleOther(data) {
 
 function toastMessage() {
     var btnOther = document.querySelectorAll('.item-product__other-btn')
-    const duration = 1000;
-    const delay = (duration / 5000).toFixed(2);
+    var contentToastMsg = document.querySelector('.toastMsg')
+    const duration = 3000;
+    const delay = (duration / 1000).toFixed(2);
+    const htmls = `
+        <span class="toastMsg__icon-wrap"> <i class="fa-solid fa-circle-check toastMsg__icon"></i></span>
+        <h4 class="toastMsg__heading">
+            Đã thêm sản phẩm vào giỏ hàng
+        </h4>
+    `;
+    
+    contentToastMsg.innerHTML = htmls;
     const autoRemoveId = setTimeout(function () {
-        toastMsg.classList.remove('active');
-    }, duration + 500);
+        toastMsg.removeChild(contentToastMsg);
+    }, duration + 1000);
     for (let btn of btnOther) {
-        btn.addEventListener('click',() => {
-            toastMsg.classList.add('active')
-            toastMsg.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
+        btn.addEventListener('click', () => {
+            toastMsg.appendChild(contentToastMsg);
+            contentToastMsg.style.display =`flex`
+            contentToastMsg.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
             clearTimeout(autoRemoveId)
         });
     }
