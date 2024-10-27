@@ -67,8 +67,14 @@ function calPrice(data){
         total += parseInt((item.price.split(/[\.0VND]/)).join(''))
     })
     usingToPrintTotal = String(total)
-    if(total >= 1000){
+    if(total >= 1000 && total < 10000){
         usingToPrintTotal = usingToPrintTotal.substring(0,1) + "." + usingToPrintTotal.substring(1) + ".000 VND"   
+    }
+    else if(total >= 10000 && total < 100000){
+        usingToPrintTotal = usingToPrintTotal.substring(0,2) + "." + usingToPrintTotal.substring(2) + ".000 VND"   
+    }
+    else if(total >= 100000){
+        usingToPrintTotal = usingToPrintTotal.substring(0,3) + "." + usingToPrintTotal.substring(3) + ".000 VND"   
     }
     else if (total === 0){
         usingToPrintTotal = "0 VND"

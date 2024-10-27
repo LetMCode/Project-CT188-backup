@@ -62,7 +62,7 @@ function toastMessage() {
     for (let btn of btnOther) {
         btn.addEventListener('click', () => {
             toastMsg.appendChild(contentToastMsg);
-            contentToastMsg.style.display =`flex`
+            toastMsg.style.display = 'flex'
             contentToastMsg.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
             clearTimeout(autoRemoveId)
         });

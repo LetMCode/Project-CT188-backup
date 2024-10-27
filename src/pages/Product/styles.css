@@ -2,10 +2,7 @@
     position: fixed;
     top: 100px;
     right: 50px;
-    /* display: none; */
-}
-.active{
-    display: block;
+    display: none;
 }
 .toastMsg {
     width: auto;
@@ -18,7 +15,7 @@
     padding: 15px;
     align-items: center;
     transform: all linear 0.3s;
-    display: none;
+    display: flex;
 }
 
 @keyframes slideInLeft {
