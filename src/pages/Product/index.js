@@ -38,13 +38,12 @@ function addItem(data, callback) {
 }
 
 function handleOther(data) {
+    toastMessage()
     addItem(data);
     app.getCartAPI(app.renderIconQuantityCart);
-    toastMessage()
 }
 
 function toastMessage() {
-    var btnOther = document.querySelectorAll('.item-product__other-btn')
     var contentToastMsg = document.querySelector('.toastMsg')
     const duration = 3000;
     const delay = (duration / 1000).toFixed(2);
@@ -54,19 +53,15 @@ function toastMessage() {
             Đã thêm sản phẩm vào giỏ hàng
         </h4>
     `;
-    
     contentToastMsg.innerHTML = htmls;
     const autoRemoveId = setTimeout(function () {
         toastMsg.removeChild(contentToastMsg);
     }, duration + 1000);
-    for (let btn of btnOther) {
-        btn.addEventListener('click', () => {
-            toastMsg.appendChild(contentToastMsg);
-            toastMsg.style.display = 'block'
-            contentToastMsg.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
-            clearTimeout(autoRemoveId)
-        });
-    }
+    toastMsg.appendChild(contentToastMsg);
+    toastMsg.classList.add('active')
+    contentToastMsg.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
+    clearTimeout(autoRemoveId)
+    
 }
 
 const app = {

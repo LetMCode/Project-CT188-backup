@@ -4,6 +4,9 @@
     right: 50px;
     display: none;
 }
+.active{
+    display: block;
+}
 .toastMsg {
     width: auto;
     height: 100px;
