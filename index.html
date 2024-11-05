@@ -70,7 +70,7 @@
       </div>
       <div class="controls">
         <button class="control-btn" id="prevBtn">
-          <h3>></h3>
+          <h3><</h3>
         </button>
         <button class="control-btn" id="nextBtn">
           <h3>></h3>
@@ -651,7 +651,7 @@
       </div>
     </div>
     <div class="danhgia">
-      <div class="nen">
+      <div class="nen backgroundBlack">
         <div class="container">
           <div class="row">
             <div class="col-12">
@@ -915,6 +915,12 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
   <script src="./index.js"> </script>
+  <script>
+    nextBtn.addEventListener("click", nextSlide);
+    prevBtn.addEventListener("click", prevSlide);
+    setInterval(nextSlide, 3500); // Chuyển ảnh sau mỗi 3 giây
+
+  </script>
 </body>
 
 </html>

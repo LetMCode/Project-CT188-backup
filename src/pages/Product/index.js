@@ -4,6 +4,8 @@ var list = document.querySelector(".list-item");
 var IconCart = document.querySelector(".icon-cart");
 var posIconCart = document.createElement("span");
 var toastMsg = document.querySelector(".toastMsg-wrap");
+
+
 function getItem(data, callback) {
     var options = {
         method: "GET",
@@ -80,21 +82,23 @@ const app = {
             return `
                 <div data-id="${item.id}" class="item-product">
                     <img src="${item.img}" alt="" class="item-product__img">
-                    <h4 class="item-product__heading">
-                        ${item.name}
-                    </h4>
-                    <h5 class="item-product__code">
-                        ${item.code}
-                    </h5>
-                    <p class="item-product__author">
-                        Hãng: ${item.author}
-                    </p>
-                    <p class="item-product__size">
-                        Size: ${item.size}
-                    </p>
-                    <p onclick="click(e)" class="item-product__price">
-                        Price: ${item.price}
-                    </p>
+                    <div class="item-product__wrap">
+                        <h4 class="item-product__heading">
+                            ${item.name}
+                        </h4>
+                        <h5 class="item-product__code">
+                            ${item.code}
+                        </h5>
+                        <p class="item-product__author">
+                            Hãng: ${item.author}
+                        </p>
+                        <p class="item-product__size">
+                            Size: ${item.size}
+                        </p>
+                        <p onclick="click(e)" class="item-product__price">
+                            Price: ${item.price}
+                        </p>
+                    </div>
                     <button onclick ="getItem(${item.id},handleOther)" class="item-product__other-btn">
                         Other
                     </button>
