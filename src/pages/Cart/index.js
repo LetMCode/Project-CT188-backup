@@ -110,9 +110,9 @@ function renderTotalPrice(data){
     cardPayment.innerHTML = html
 }
 
-function start(){
+function startCartPage(){
     getCartAPI(renderCart)
     getCartAPI(renderIconQuantityCart)
 }
 
-start()
+startCartPage()

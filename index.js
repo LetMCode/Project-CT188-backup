@@ -1,13 +1,20 @@
-var body = document.querySelector('body')
-const header = document.createElement('header')
-var footer = document.createElement('footer')
+var body = document.querySelector("body");
+const header = document.createElement("header");
+var footer = document.createElement("footer");
+var posIconCart = document.createElement("span");
 var slides = document.querySelector(".slides");
 var slideImages = document.querySelectorAll(".slide");
 var prevBtn = document.getElementById("prevBtn");
 var nextBtn = document.getElementById("nextBtn");
+var posIconCart = document.createElement("span");
+var list = document.querySelector(".list-item");
+var toastMsg = document.querySelector(".toastMsg-wrap");
 var totalSlides = slideImages.length;
+var shoesAPI = "http://localhost:3000/shoes";
+var cartUserAPI = "http://localhost:3000/cartUser";
+
 let currentIndex = 0;
-function Header (){
+function Header() {
     const html = `
     <div class="container">
             <div class="header">
@@ -43,11 +50,11 @@ function Header (){
                 </ul>
             </div>
         </div>
-    `
-    header.innerHTML = html
-    return body.appendChild(header) 
-}  
-function Footer (){
+    `;
+    header.innerHTML = html;
+    return body.appendChild(header);
+}
+function Footer() {
     const html = `
        <div class="container">
             <div class="footer">
@@ -148,11 +155,10 @@ function Footer (){
                 </div>
             </div>
         </div>
-    `
-    footer.innerHTML = html
-    return body.appendChild(footer) 
-}  
-
+    `;
+    footer.innerHTML = html;
+    return body.appendChild(footer);
+}
 
 function showSlide(index) {
     if (index >= totalSlides) {
@@ -369,3 +375,245 @@ Validator.isConfirm = function (selector, getconfirm, message) {
     };
 };
 //----------------//
+
+
+// ProductPage & CartPage
+
+function getItem(data, callback) {
+    var options = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    };
+    fetch(shoesAPI + "/" + data, options)
+        .then(function (response) {
+            return response.json();
+        })
+
+        .then(callback);
+}
+
+function addItem(data, callback) {
+    var options = {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+    };
+
+    fetch(cartUserAPI, options)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(callback);
+}
+function DeleteItem(data, callback) {
+  var options = {
+      method: "DELETE",
+      body: JSON.stringify(data),
+      headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+      },
+  };
+  fetch(cartUserAPI + "/" + data, options)
+      .then(function (response) {
+          return response.json();
+      })
+      .then(() => {
+          getCartAPI(renderCart);
+          getCartAPI(renderIconQuantityCart);
+      })
+      .then(callback);
+}
+function handleOther(data) {
+    toastMessage();
+    addItem(data);
+    ProductJS.getCartAPI(ProductJS.renderIconQuantityCart);
+}
+
+function handleDeleteItem(data){
+  toastMessage()
+  DeleteItem(data.id)
+  CartPageJS.start()
+}
+function toastMessage() {
+    var contentToastMsg = document.createElement("div");
+    contentToastMsg.setAttribute('class','toastMsg')
+    const duration = 3000;
+    const delay = (duration / 1000).toFixed(2);
+    const htmls = `
+        <span class="toastMsg__icon-wrap"> <i class="fa-solid fa-circle-check toastMsg__icon"></i></span>
+        <h4 class="toastMsg__heading">
+            Đã thêm sản phẩm vào giỏ hàng
+        </h4>
+    `;
+    contentToastMsg.innerHTML = htmls;
+    const autoRemoveId = setTimeout(function () {
+        toastMsg.removeChild(contentToastMsg);
+    }, duration + 1000);
+    toastMsg.appendChild(contentToastMsg);
+    toastMsg.classList.add("active");
+    contentToastMsg.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
+    clearTimeout(autoRemoveId);
+}
+function calPrice(data) {
+  let total = 0;
+  data.map((item) => {
+      total += parseInt(item.price.split(/[\.0VND]/).join(""));
+  });
+  usingToPrintTotal = String(total);
+  if (total >= 1000 && total < 10000) {
+      usingToPrintTotal =
+          usingToPrintTotal.substring(0, 1) +
+          "." +
+          usingToPrintTotal.substring(1) +
+          ".000 VND";
+  } else if (total >= 10000 && total < 100000) {
+      usingToPrintTotal =
+          usingToPrintTotal.substring(0, 2) +
+          "." +
+          usingToPrintTotal.substring(2) +
+          ".000 VND";
+  } else if (total >= 100000) {
+      usingToPrintTotal =
+          usingToPrintTotal.substring(0, 3) +
+          "." +
+          usingToPrintTotal.substring(3) +
+          ".000 VND";
+  } else if (total === 0) {
+      usingToPrintTotal = "0 VND";
+  } else {
+      usingToPrintTotal = String(total) + ".000 VND";
+  }
+  return usingToPrintTotal;
+}
+
+const ProductJS = {
+    getProductAPI: function (callback) {
+        fetch(shoesAPI)
+            .then((response) => response.json())
+            .then(callback);
+    },
+    getCartAPI: function (callback) {
+        fetch(cartUserAPI)
+            .then((response) => response.json())
+            .then(callback);
+    },
+    renderProductAPI: function (ListOfAPI) {
+        const html = ListOfAPI.map((item) => {
+            return `
+                <div data-id="${item.id}" class="item-product">
+                    <img src="${item.img}" alt="" class="item-product__img">
+                    <div class="item-product__wrap">
+                        <h4 class="item-product__heading">
+                            ${item.name}
+                        </h4>
+                        <h5 class="item-product__code">
+                            ${item.code}
+                        </h5>
+                        <p class="item-product__author">
+                            Hãng: ${item.author}
+                        </p>
+                        <p class="item-product__size">
+                            Size: ${item.size}
+                        </p>
+                        <p onclick="click(e)" class="item-product__price">
+                            Price: ${item.price}
+                        </p>
+                    </div>
+                    <button onclick ="getItem(${item.id},handleOther)" class="item-product__other-btn">
+                        Other
+                    </button>
+                </div>
+                `;
+        });
+        list.innerHTML = html.join("");
+    },
+    renderIconQuantityCart: function (data) {
+        var IconCart = document.querySelector(".icon-cart");
+        posIconCart.setAttribute("class", ".item-page__action-icon");
+        const htmls = `
+            <span class="quantityIcon-header">${data.length}</span>
+        `;
+        posIconCart.innerHTML = htmls;
+        IconCart.appendChild(posIconCart);
+    },
+    start: function () {
+        this.getCartAPI(this.renderIconQuantityCart);
+        this.getProductAPI(this.renderProductAPI);
+    },
+};
+
+
+const CartPageJS = {
+    getCartAPI: function (callback) {
+        fetch(cartUserAPI)
+            .then((response) => response.json())
+            .then(callback);
+    },
+    renderTotalPrice:function(data) {
+      var cardPayment = document.querySelector(".slide_payment");
+      const total = calPrice(data);
+      const html = `
+         <div class="slider-payment-wrap">
+              <h3 class="payment-heading">
+                  Thông tin đơn hàng
+              </h3>
+              <p class="payment-desc__temp">
+                  Tạm tính: ${total}
+              </p>
+              <p class="payment-desc__total">
+                  Tổng tính: ${total}
+              </p>
+              <p class="payment-desc__sub">
+                  Bạn có thể nhập mã giảm giá ở trang thanh toán
+              </p>
+              <button class="payment-btn__payed">
+                  Thanh toán
+              </button>
+         </div>
+      `;
+      cardPayment.innerHTML = html;
+    },
+    renderIconQuantityCart: function (data) {
+        var IconCart = document.querySelector(".icon-cart");
+        posIconCart.setAttribute("class", ".item-page__action-icon");
+        const htmls = `
+          <span class="quantityIcon-header">${data.length}</span>
+        `;
+        posIconCart.innerHTML = htmls;
+        IconCart.appendChild(posIconCart);
+    },
+    renderCart: function (data) {
+        var listCart = document.querySelector(".list-item__cart");
+        
+        if (data.length !== 0) {
+            const htmls = data.map((item) => {
+                return `
+          <div class="item-cart" data-id="${item.id}">
+          <img src="${item.img}" alt="" class="item-cart__img">
+          <h4 class="item-cart__heading">${item.name}</h4>
+          <h5 class="item-cart__code">${item.code}</h5>
+          <p class="item-cart__size">Size: ${item.size}</p>
+          <p class="item-cart__price">${item.price}</p>
+          <button onclick="getItem(${item.id},handleDeleteItem)" class="btn-delete__cart" >&times Delete</button>
+          </div>
+          `;
+            });
+            listCart.innerHTML = htmls.join("");
+        } else {
+            listCart.innerHTML = `
+          <div class="textTemp-cart">Chưa có sản phẩm trong giỏ hàng</div>
+      `;
+        }
+    },
+    start:function (){
+      this.getCartAPI(this.renderCart)
+      this.getCartAPI(this.renderIconQuantityCart)
+      this.getCartAPI(this.renderTotalPrice)
+    }
+};
