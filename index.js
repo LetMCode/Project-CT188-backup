@@ -71,15 +71,15 @@ const handleHeader = {
     handleEventHeader: function () {
         var btnMenu = document.querySelector(".icon-menu__header");
         var listPage = document.querySelector(".list-pages");
-        var btnIconHeader = document.querySelector(".icon-action__wrap")
-        var wrapSign = document.querySelector(".item-page__action-wrap")
-        btnIconHeader.addEventListener("click",() =>{
-            if(wrapSign.classList.contains("icon-action__wrap__active")){
-                wrapSign.classList.remove("icon-action__wrap__active")
-            }else{
-                wrapSign.classList.add("icon-action__wrap__active")
+        var btnIconHeader = document.querySelector(".icon-action__wrap");
+        var wrapSign = document.querySelector(".item-page__action-wrap");
+        btnIconHeader.addEventListener("click", () => {
+            if (wrapSign.classList.contains("icon-action__wrap__active")) {
+                wrapSign.classList.remove("icon-action__wrap__active");
+            } else {
+                wrapSign.classList.add("icon-action__wrap__active");
             }
-        })
+        });
 
         btnMenu.addEventListener("click", () => {
             if (listPage.classList.contains("list-pages__active")) {
@@ -94,8 +94,6 @@ const handleHeader = {
         this.handleEventHeader();
     },
 };
-
-
 
 const handleFooter = {
     renderFooter: function () {
@@ -203,7 +201,7 @@ const handleFooter = {
         footer.innerHTML = html;
         return body.appendChild(footer);
     },
-    renderBtn:function(){
+    renderBtn: function () {
         const btnTurnBack = document.createElement("div");
         body.setAttribute("id", "body");
         const htmls = `
@@ -214,10 +212,10 @@ const handleFooter = {
         btnTurnBack.innerHTML = htmls;
         return body.appendChild(btnTurnBack);
     },
-    start: function() {
-        this.renderFooter()
+    start: function () {
+        this.renderFooter();
         this.renderBtn();
-    }
+    },
 };
 
 function showSlide(index) {
@@ -495,7 +493,7 @@ function addItem(data, callback) {
 
     fetch(cartUserAPI, options)
         .then(function (response) {
-            console.log(response)
+            console.log(response);
             return response.json();
         })
         .then(callback);
@@ -503,20 +501,21 @@ function addItem(data, callback) {
 function DeleteItem(data, callback) {
     var options = {
         method: "DELETE",
-        body: JSON.stringify(data),
         headers: {
             "Content-Type": "application/json",
         },
     };
+    console.log(options);
     fetch(cartUserAPI + "/" + data, options)
         .then(function (response) {
+            console.log(response);
             return response.json();
         })
         .then(callback);
 }
 function handleOther(data) {
     toastMessage();
-    
+
     addItem(data);
     ProductJS.getCartAPI(ProductJS.renderIconQuantityCart);
 }
@@ -589,7 +588,6 @@ const ProductJS = {
             .then(callback);
     },
     renderProductAPI: function (ListOfAPI, id) {
-        console.log(ListOfAPI)
         const html = ListOfAPI[id].page.map((item) => {
             return `
                 <div data-id="${item.id}" class="item-product">
@@ -678,7 +676,6 @@ const CartPageJS = {
     },
     renderCart: function (data) {
         var listCart = document.querySelector(".list-item__cart");
-        console.log(data)
         if (data.length !== 0) {
             const htmls = data.map((item) => {
                 return `
