@@ -11,7 +11,7 @@ var list = document.querySelector(".list-item");
 var toastMsg = document.querySelector(".toastMsg-wrap");
 var totalSlides = slideImages.length;
 var shoesAPI = "https://hostapi-g350.onrender.com/api/product";
-var cartUserAPI = "http://localhost:3000/cartUser";
+var cartUserAPI = "https://hostapi-g350.onrender.com/api/cartUser";
 
 let currentIndex = 0;
 
@@ -490,12 +490,12 @@ function addItem(data, callback) {
         body: JSON.stringify(data),
         headers: {
             "Content-Type": "application/json",
-            Accept: "application/json",
         },
     };
 
     fetch(cartUserAPI, options)
         .then(function (response) {
+            console.log(response)
             return response.json();
         })
         .then(callback);
@@ -506,7 +506,6 @@ function DeleteItem(data, callback) {
         body: JSON.stringify(data),
         headers: {
             "Content-Type": "application/json",
-            Accept: "application/json",
         },
     };
     fetch(cartUserAPI + "/" + data, options)
@@ -517,6 +516,7 @@ function DeleteItem(data, callback) {
 }
 function handleOther(data) {
     toastMessage();
+    
     addItem(data);
     ProductJS.getCartAPI(ProductJS.renderIconQuantityCart);
 }
@@ -579,10 +579,8 @@ function calPrice(data) {
 
 const ProductJS = {
     getProductAPI: function (callback, id) {
-        console.log(shoesAPI);
         fetch(shoesAPI)
             .then((response) => response.json())
-            .then(data => console.log(data))
             .then((data) => callback(data, id));
     },
     getCartAPI: function (callback) {
@@ -591,6 +589,7 @@ const ProductJS = {
             .then(callback);
     },
     renderProductAPI: function (ListOfAPI, id) {
+        console.log(ListOfAPI)
         const html = ListOfAPI[id].page.map((item) => {
             return `
                 <div data-id="${item.id}" class="item-product">
@@ -679,7 +678,7 @@ const CartPageJS = {
     },
     renderCart: function (data) {
         var listCart = document.querySelector(".list-item__cart");
-
+        console.log(data)
         if (data.length !== 0) {
             const htmls = data.map((item) => {
                 return `
