@@ -10,60 +10,107 @@ var posIconCart = document.createElement("span");
 var list = document.querySelector(".list-item");
 var toastMsg = document.querySelector(".toastMsg-wrap");
 var totalSlides = slideImages.length;
-var shoesAPI = "http://localhost:3000/shoes";
+var shoesAPI = "http://localhost:3000/product";
 var cartUserAPI = "http://localhost:3000/cartUser";
 
 let currentIndex = 0;
-function Header() {
-    const html = `
-    <div class="container">
-            <div class="header">
-                <a href="../../../index.html" class="logo-link">
-                    <img src="../../assets/images/HomeIMG/logo1.png"/ alt="" class="logo-pages">
-                </a>
-                <ul class="list-pages">
-                    <li class="item-page">
-                        <a href="../Intro/index.html" class="item-label">About Us</a>
-                    </li>
-                    <li class="item-page">
-                        <a href="../Product/index.html" class="item-label">Product</a>
-                    </li>
-                    <li class="item-page">
-                        <a href="../Blogs/index.html" class="item-label">Blogs</a>
-                    </li>
-                    <li class="item-page">
-                        <a href="../Contact/index.html" class="item-label">Contact</a>
-                    </li>
-                </ul>
-                <ul class="list-actions">
-                    <li class="item-page__action item-page__action-icon">
-                    <a href="../Cart/index.html" class="item-label icon-cart">
-                        <i class="fa-solid fa-cart-shopping"></i>
+
+const handleHeader = {
+    renderHeader: function () {
+        const html = `
+        <div class="container">
+                <div class="header-wrap">
+                    <span class="icon-menu__header">
+                        <i class="fa-solid fa-bars"></i>
+                    </span>
+                    <a href="../../../index.html" class="logo-link">
+                        <img src="../../assets/images/HomeIMG/logo1.png"/ alt="" class="logo-pages">
                     </a>
-                    </li>
-                    <li class="item-page__action">
-                        <a href="../SignUp/index.html" class="item-label">Sign Up</a>
-                    </li>
-                    <li class="item-page__action btn__signUp">
-                        <a href="../SignIn/index.html" class="item-label">Sign In</a>
-                    </li>
-                </ul>
+                    <ul class="list-pages ">
+                        <li class="item-page item-page__home">
+                            <a href="../../../index.html" class="item-label">Home</a>
+                        </li>
+                        <li class="item-page">
+                            <a href="../Intro/index.html" class="item-label">Giới thiệu</a>
+                        </li>
+                        <li class="item-page">
+                            <a href="../Product/index.html" class="item-label">Sản phẩm</a>
+                        </li>
+                        <li class="item-page">
+                            <a href="../Blogs/index.html" class="item-label">Blogs</a>
+                        </li>
+                        <li class="item-page">
+                            <a href="../Contact/index.html" class="item-label">Liên hệ</a>
+                        </li>
+                    </ul>
+                    <ul class="list-actions">
+                        <li class="item-page__action item-page__action-icon">
+                        <a href="../Cart/index.html" class=" icon-cart">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </a>
+                        </li>
+                        <li class="item-page__action item-page__action-fragment ">
+                            <span class="icon-action__wrap">
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+                            <div class="item-page__action-wrap">
+                                
+                                <div class="item-page__action__sign-in">
+                                    <a href="../SignIn/index.html" >Đăng nhập</a>
+                                </div>
+                                <a class="item-page__action__sign-up" href="../SignUp/index.html" >Đăng ký</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    `;
-    header.innerHTML = html;
-    return body.appendChild(header);
+        `;
+        header.innerHTML = html;
+        return body.appendChild(header);
+    },
+    handleEventHeader: function () {
+        var btnMenu = document.querySelector(".icon-menu__header");
+        var listPage = document.querySelector(".list-pages");
+        var btnIconHeader = document.querySelector(".icon-action__wrap")
+        var wrapSign = document.querySelector(".item-page__action-wrap")
+        btnIconHeader.addEventListener("click",() =>{
+            if(wrapSign.classList.contains("icon-action__wrap__active")){
+                wrapSign.classList.remove("icon-action__wrap__active")
+            }else{
+                wrapSign.classList.add("icon-action__wrap__active")
+            }
+        })
+
+        btnMenu.addEventListener("click", () => {
+            if (listPage.classList.contains("list-pages__active")) {
+                listPage.classList.remove("list-pages__active");
+            } else {
+                listPage.classList.add("list-pages__active");
+            }
+        });
+    },
+    start: function () {
+        this.renderHeader();
+        this.handleEventHeader();
+    },
+};
+
+
+function renderBtn() {
+    
 }
-function Footer() {
-    const html = `
+
+const handleFooter = {
+    renderFooter: function () {
+        const html = `
        <div class="container">
             <div class="footer">
                 <ul class="list-footer">
                     <li class="item-footer item-footer__left">
                         <span>
-                            Hotline:<br/>
+                            Hotline:0912528877<br/>
                             9:00-18:00, Thứ Hai đến Thứ Sáu<br/>
-                            Email@
+                            ballance&gara@gmail.com
                         </span>
                         <span>
                             <a href="#!">
@@ -78,27 +125,27 @@ function Footer() {
                         <div class="item-footer__center-content">
                             <label class="item-footer__center-label">Sản phẩm</label>
                             <ul>
-                                <a href="#!" class="">Bộ sưu tập 2024</a>
-                                <a href="#!" class="">Bộ sưu tập Signature</a>
-                                <a href="#!" class="">Sản phẩm nổi bật</a>
-                                <a href="#!" class="">Sản phẩm bán chạy</a>
-                                <a href="#!" class="">Sản phẩm khuyến mãi</a>
+                                <a href="../Product/index.html" class="">Bộ sưu tập 2024</a>
+                                <a href="../Product/index.html" class="">Bộ sưu tập Signature</a>
+                                <a href="../Product/index.html" class="">Sản phẩm nổi bật</a>
+                                <a href="../Product/index.html" class="">Sản phẩm bán chạy</a>
+                                <a href="../Product/index.html" class="">Sản phẩm khuyến mãi</a>
                             </ul>
                         </div>
                         <div class="item-footer__center-content">
                             <label class="item-footer__center-label">Contract With Us</label>
                             <ul>
-                                <li><a href="#!" class="">Đặt hàng số lượng lớn</a></li>
-                                <li><a href="#!" class="">Khách hàng doanh nghiệp</a></li>
-                                <li><a href="#!" class="">Hợp tác phối hợp</a></li>
-                                <li><a href="#!" class="">Hợp tác doanh nghiệp</a></li>
+                                <li><a href="../Contact/index.html" class="">Đặt hàng số lượng lớn</a></li>
+                                <li><a href="../Contact/index.html" class="">Khách hàng doanh nghiệp</a></li>
+                                <li><a href="../Contact/index.html" class="">Hợp tác phối hợp</a></li>
+                                <li><a href="../Contact/index.html" class="">Hợp tác doanh nghiệp</a></li>
                             </ul>
                         </div>
                     </li>
                     <li class="item-footer">
                         <p class="item-footer__desc">
                             Hợp tác doanh nghiệp<br/>
-                            CÔNG TY TNHH Tarmor<br/>
+                            CÔNG TY TNHH Ballance & Gara<br/>
                             Khu II, Đ. 3 Tháng 2, Xuân Khánh, Ninh Kiều,<br/>
                             Thành phố  Cần Thơ, Việt Nam<br/>
                             MST: 0317645769<br/>
@@ -117,22 +164,22 @@ function Footer() {
                     <div class="item-footer__bottom-center">
                         <ul class="item-footer__bottom-list">
                             <li>
-                                <a href="#!" class="item-footer__bottom-desc">
+                                <a href="../Policies/index.html" class="item-footer__bottom-desc">
                                     Đổi trả
                                 </a>
                             </li>
                             <li>
-                                <a href="#!" class="item-footer__bottom-desc">
+                                <a href="../Policies/index.html" class="item-footer__bottom-desc">
                                     chính sách thanh toán
                                 </a>
                             </li>
                             <li>
-                                <a href="#!" class="item-footer__bottom-desc">
+                                <a href="../Policies/index.html" class="item-footer__bottom-desc">
                                     chính sách giao hàng
                                 </a>
                             </li>
                             <li>
-                                <a href="#!" class="item-footer__bottom-desc">
+                                <a href="../Policies/index.html" class="item-footer__bottom-desc">
                                     hướng dẫn mua hàng
                                 </a>
                             </li>
@@ -141,12 +188,12 @@ function Footer() {
                     <div class="item-footer__bottom-right">
                         <ul class="item-footer__bottom-list">
                             <li>
-                                <a href="#!" class="item-footer__bottom-desc">
+                                <a href="../Policies/index.html" class="item-footer__bottom-desc">
                                     Điều Khoản Sử Dụng
                                 </a>
                             </li>
                             <li>
-                                <a href="#!" class="item-footer__bottom-desc">
+                                <a href="../Policies/index.html" class="item-footer__bottom-desc">
                                     Chính Sách Bảo Mật
                                 </a>
                             </li>
@@ -156,9 +203,25 @@ function Footer() {
             </div>
         </div>
     `;
-    footer.innerHTML = html;
-    return body.appendChild(footer);
-}
+        footer.innerHTML = html;
+        return body.appendChild(footer);
+    },
+    renderBtn:function(){
+        const btnTurnBack = document.createElement("div");
+        body.setAttribute("id", "body");
+        const htmls = `
+            <a href="#body" class="btn__turn-back">
+                <i class="fa-solid fa-arrow-up-from-bracket"></i>
+            </a>
+        `;
+        btnTurnBack.innerHTML = htmls;
+        return body.appendChild(btnTurnBack);
+    },
+    start: function() {
+        this.renderFooter()
+        this.renderBtn();
+    }
+};
 
 function showSlide(index) {
     if (index >= totalSlides) {
@@ -176,6 +239,37 @@ function nextSlide() {
 function prevSlide() {
     showSlide(currentIndex - 1);
 }
+// Ảnh hàng
+const HomePageJS = {
+    handleEvent: function () {
+        setInterval(nextSlide, 3500);
+        document.querySelectorAll(".product-img img").forEach((img) => {
+            const originalSrc = img.src;
+            const hoverSrc = img.getAttribute("data-hover");
+            img.addEventListener("mouseover", () => {
+                img.src = hoverSrc;
+            });
+            img.addEventListener("mouseout", () => {
+                img.src = originalSrc;
+            });
+        });
+
+        document.querySelectorAll(".box-product .color-dot").forEach((dot) => {
+            dot.addEventListener("click", () => {
+                const newSrc = dot.getAttribute("data-img-src");
+                dot.closest(".box-product")
+                    .querySelectorAll(".product-img img")
+                    .forEach((img) => {
+                        img.src = newSrc;
+                    });
+            });
+        });
+        nextBtn.addEventListener("click", nextSlide);
+        prevBtn.addEventListener("click", prevSlide);
+    },
+};
+
+// Đổi ảnh khi click vào các chấm màu
 
 // DANH
 function Validator(options) {
@@ -376,21 +470,20 @@ Validator.isConfirm = function (selector, getconfirm, message) {
 };
 //----------------//
 
-
 // ProductPage & CartPage
 
-function getItem(data, callback) {
+function getItem(id, data, callback) {
     var options = {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
         },
     };
-    fetch(shoesAPI + "/" + data, options)
+    fetch(shoesAPI, options)
         .then(function (response) {
             return response.json();
         })
-
+        .then((product) => product[id].page[data - 1])
         .then(callback);
 }
 
@@ -411,23 +504,19 @@ function addItem(data, callback) {
         .then(callback);
 }
 function DeleteItem(data, callback) {
-  var options = {
-      method: "DELETE",
-      body: JSON.stringify(data),
-      headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-      },
-  };
-  fetch(cartUserAPI + "/" + data, options)
-      .then(function (response) {
-          return response.json();
-      })
-      .then(() => {
-          getCartAPI(renderCart);
-          getCartAPI(renderIconQuantityCart);
-      })
-      .then(callback);
+    var options = {
+        method: "DELETE",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+    };
+    fetch(cartUserAPI + "/" + data, options)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(callback);
 }
 function handleOther(data) {
     toastMessage();
@@ -435,14 +524,12 @@ function handleOther(data) {
     ProductJS.getCartAPI(ProductJS.renderIconQuantityCart);
 }
 
-function handleDeleteItem(data){
-  toastMessage()
-  DeleteItem(data.id)
-  CartPageJS.start()
+function handleDeleteItem(data) {
+    DeleteItem(data.id);
+    CartPageJS.start();
 }
 function toastMessage() {
-    var contentToastMsg = document.createElement("div");
-    contentToastMsg.setAttribute('class','toastMsg')
+    const contentToastMsg = document.querySelector(".toastMsg");
     const duration = 3000;
     const delay = (duration / 1000).toFixed(2);
     const htmls = `
@@ -460,54 +547,56 @@ function toastMessage() {
     contentToastMsg.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
     clearTimeout(autoRemoveId);
 }
+
 function calPrice(data) {
-  let total = 0;
-  data.map((item) => {
-      total += parseInt(item.price.split(/[\.0VND]/).join(""));
-  });
-  usingToPrintTotal = String(total);
-  if (total >= 1000 && total < 10000) {
-      usingToPrintTotal =
-          usingToPrintTotal.substring(0, 1) +
-          "." +
-          usingToPrintTotal.substring(1) +
-          ".000 VND";
-  } else if (total >= 10000 && total < 100000) {
-      usingToPrintTotal =
-          usingToPrintTotal.substring(0, 2) +
-          "." +
-          usingToPrintTotal.substring(2) +
-          ".000 VND";
-  } else if (total >= 100000) {
-      usingToPrintTotal =
-          usingToPrintTotal.substring(0, 3) +
-          "." +
-          usingToPrintTotal.substring(3) +
-          ".000 VND";
-  } else if (total === 0) {
-      usingToPrintTotal = "0 VND";
-  } else {
-      usingToPrintTotal = String(total) + ".000 VND";
-  }
-  return usingToPrintTotal;
+    let total = 0;
+    data.map((item) => {
+        total += parseInt(item.price.split(/\.|000VND/).join(""));
+    });
+    usingToPrintTotal = String(total);
+    if (total >= 1000 && total < 10000) {
+        usingToPrintTotal =
+            usingToPrintTotal.substring(0, 1) +
+            "." +
+            usingToPrintTotal.substring(1) +
+            ".000 VND";
+    } else if (total >= 10000 && total < 100000) {
+        usingToPrintTotal =
+            usingToPrintTotal.substring(0, 2) +
+            "." +
+            usingToPrintTotal.substring(2) +
+            ".000 VND";
+    } else if (total >= 100000) {
+        usingToPrintTotal =
+            usingToPrintTotal.substring(0, 3) +
+            "." +
+            usingToPrintTotal.substring(3) +
+            ".000 VND";
+    } else if (total === 0) {
+        usingToPrintTotal = "0 VND";
+    } else {
+        usingToPrintTotal = String(total) + ".000 VND";
+    }
+    return usingToPrintTotal;
 }
 
 const ProductJS = {
-    getProductAPI: function (callback) {
+    getProductAPI: function (callback, id) {
+        console.log(shoesAPI);
         fetch(shoesAPI)
             .then((response) => response.json())
-            .then(callback);
+            .then((data) => callback(data, id));
     },
     getCartAPI: function (callback) {
         fetch(cartUserAPI)
             .then((response) => response.json())
             .then(callback);
     },
-    renderProductAPI: function (ListOfAPI) {
-        const html = ListOfAPI.map((item) => {
+    renderProductAPI: function (ListOfAPI, id) {
+        const html = ListOfAPI[id].page.map((item) => {
             return `
                 <div data-id="${item.id}" class="item-product">
-                    <img src="${item.img}" alt="" class="item-product__img">
+                    <a href="#!"><img src="${item.img}" alt="" class="item-product__img"></a>
                     <div class="item-product__wrap">
                         <h4 class="item-product__heading">
                             ${item.name}
@@ -525,7 +614,7 @@ const ProductJS = {
                             Price: ${item.price}
                         </p>
                     </div>
-                    <button onclick ="getItem(${item.id},handleOther)" class="item-product__other-btn">
+                    <button onclick ="getItem(${id},${item.id},handleOther)" class="item-product__other-btn">
                         Other
                     </button>
                 </div>
@@ -542,12 +631,14 @@ const ProductJS = {
         posIconCart.innerHTML = htmls;
         IconCart.appendChild(posIconCart);
     },
-    start: function () {
+    renderIconQuantityCartForPages: function () {
         this.getCartAPI(this.renderIconQuantityCart);
-        this.getProductAPI(this.renderProductAPI);
+    },
+    start: function (id) {
+        this.getProductAPI(this.renderProductAPI, id);
+        this.getCartAPI(this.renderIconQuantityCart);
     },
 };
-
 
 const CartPageJS = {
     getCartAPI: function (callback) {
@@ -555,10 +646,10 @@ const CartPageJS = {
             .then((response) => response.json())
             .then(callback);
     },
-    renderTotalPrice:function(data) {
-      var cardPayment = document.querySelector(".slide_payment");
-      const total = calPrice(data);
-      const html = `
+    renderTotalPrice: function (data) {
+        var cardPayment = document.querySelector(".slide_payment");
+        const total = calPrice(data);
+        const html = `
          <div class="slider-payment-wrap">
               <h3 class="payment-heading">
                   Thông tin đơn hàng
@@ -577,7 +668,7 @@ const CartPageJS = {
               </button>
          </div>
       `;
-      cardPayment.innerHTML = html;
+        cardPayment.innerHTML = html;
     },
     renderIconQuantityCart: function (data) {
         var IconCart = document.querySelector(".icon-cart");
@@ -590,17 +681,19 @@ const CartPageJS = {
     },
     renderCart: function (data) {
         var listCart = document.querySelector(".list-item__cart");
-        
+
         if (data.length !== 0) {
             const htmls = data.map((item) => {
                 return `
           <div class="item-cart" data-id="${item.id}">
-          <img src="${item.img}" alt="" class="item-cart__img">
-          <h4 class="item-cart__heading">${item.name}</h4>
-          <h5 class="item-cart__code">${item.code}</h5>
-          <p class="item-cart__size">Size: ${item.size}</p>
-          <p class="item-cart__price">${item.price}</p>
-          <button onclick="getItem(${item.id},handleDeleteItem)" class="btn-delete__cart" >&times Delete</button>
+            <img src="${item.img}" alt="" class="item-cart__img">
+            <div class="item-cart__info col-lg-8">
+                <h4 class="item-cart__heading">${item.name}</h4>
+                <h5 class="item-cart__code">${item.code}</h5>
+                <p class="item-cart__size">Size: ${item.size}</p>
+                <p class="item-cart__price">${item.price}</p>
+            </div>
+            <button onclick="getItem(0,${item.id},handleDeleteItem)" class="btn-delete__cart" >&times Delete</button>
           </div>
           `;
             });
@@ -611,9 +704,10 @@ const CartPageJS = {
       `;
         }
     },
-    start:function (){
-      this.getCartAPI(this.renderCart)
-      this.getCartAPI(this.renderIconQuantityCart)
-      this.getCartAPI(this.renderTotalPrice)
-    }
+
+    start: function (id) {
+        this.getCartAPI(this.renderCart);
+        this.getCartAPI(this.renderIconQuantityCart);
+        this.getCartAPI(this.renderTotalPrice);
+    },
 };

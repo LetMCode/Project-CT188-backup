@@ -16,7 +16,6 @@
     <link rel="manifest" href="../../assets/images/Favicon/site.webmanifest" />
     <link rel="stylesheet" href="../../../node_modules/normalize.css/normalize.css">
         <link rel="stylesheet" href="../../assets/GlobalStyles/grid.css">
-    <link rel="stylesheet" href="../../assets/GlobalStyles/GlobalStyles.css">
     <link rel="stylesheet" href="../../../styles.css">
 
 </head>
@@ -24,17 +23,18 @@
 <body>
     <main>
         <div class="container-cart row">
-            <div class="list-item__cart col-md-9">
+            <div class="list-item__cart col-md-9 col-12">
             </div>
-            <div class="slide_payment col-md-3">
+            <div class="slide_payment col-md-3 col-12">
 
             </div>
         </div>
     </main>
+
     <script src="../../../index.js"></script>
     <script>
-        Header()
-        Footer()
+        handleHeader.start()
+        handleFooter.renderFooter()
         CartPageJS.start()
     </script>
 
