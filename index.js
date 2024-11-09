@@ -10,7 +10,7 @@ var posIconCart = document.createElement("span");
 var list = document.querySelector(".list-item");
 var toastMsg = document.querySelector(".toastMsg-wrap");
 var totalSlides = slideImages.length;
-var shoesAPI = "http://localhost:3000/product";
+var shoesAPI = "https://hostapi-g350.onrender.com/api/product";
 var cartUserAPI = "http://localhost:3000/cartUser";
 
 let currentIndex = 0;
@@ -96,9 +96,6 @@ const handleHeader = {
 };
 
 
-function renderBtn() {
-    
-}
 
 const handleFooter = {
     renderFooter: function () {
@@ -585,6 +582,7 @@ const ProductJS = {
         console.log(shoesAPI);
         fetch(shoesAPI)
             .then((response) => response.json())
+            .then(data => console.log(data))
             .then((data) => callback(data, id));
     },
     getCartAPI: function (callback) {
