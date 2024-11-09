@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node node_modules/json-server/lib/cli/bin.js --watch ./src/pages/Product/product.json"
+    "start": "json-server --watch ./src/pages/Product/product.json"
   },
   "engines": {
     "node": "18.x"
